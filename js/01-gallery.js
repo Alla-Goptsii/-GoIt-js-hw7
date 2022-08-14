@@ -27,7 +27,7 @@ function addItemCard(galleryItems) {
     .join("");
 }
 
-console.log(addItemCard(galleryItems));
+// console.log(addItemCard(galleryItems));
 
 currentContainer.addEventListener("click", onClickCard);
 
@@ -38,23 +38,33 @@ function onClickCard(evt) {
     return;
   }
 
-  const bigCard = evt.target.dataset.source;
-  //   evt.target.dataset.src === bigCard;
-  console.log(bigCard);
+  let selectedImg = evt.target.dataset.source;
+  console.log(selectedImg);
   console.log(evt.target);
 
-  // import * as basicLightbox from "basiclightbox";
-
   const instance = basicLightbox.create(`
-      <div class="modal">
-          <p>
-              Your first lightbox with just a few lines of code.
-              Yes, it's really that simple.
-          </p>
-      </div>
+  <div class="modal">
+        <img src="${selectedImg}"/>
+    </div>
   `);
 
   instance.show();
-  console.log(instance);
-  // evt.target.dataset.src.replace(img[data - source= 'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825_1280.jpg']);
+  const lightboxVisible = basicLightbox.visible();
+  console.log(basicLightbox.visible());
+
+  currentContainer.addEventListener("keydown", onEscKeyPress);
+  // console.log(instance);
+
+  function onEscKeyPress(event) {
+    console.log(event);
+    const isEscape = event.code === "Escape";
+    if (!lightboxVisible) {
+      console.log(event.code);
+      return;
+    }
+    if (isEscape) {
+      instance.close();
+      currentContainer.removeEventListener("keydown", onEscKeyPress);
+    }
+  }
 }
