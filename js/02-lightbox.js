@@ -1,8 +1,6 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-console.log(galleryItems);
-
 const currentContainer = document.querySelector(".gallery");
 const cardsGallery = addItemCard(galleryItems);
 
@@ -23,6 +21,5 @@ function addItemCard(galleryItems) {
 
 new SimpleLightbox(".gallery a", {
   captionsData: "alt",
-  captionPosition: "bottom",
   captionsDelay: 250,
 });
