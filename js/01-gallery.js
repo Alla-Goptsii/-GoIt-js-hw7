@@ -1,123 +1,64 @@
-// import { galleryItems } from "./gallery-items.js";
-// // Change code below this line
-// console.log(galleryItems);
-
-// const currentContainer = document.querySelector(".gallery");
-// const cardsGallery = addItemCard(galleryItems);
-
-// currentContainer.insertAdjacentHTML("beforeend", cardsGallery);
-
-// function addItemCard(galleryItems) {
-//   return galleryItems
-//     .map(({ preview, original, description }) => {
-//       return `
-//     <div class="gallery__item">
-//       <a class="gallery__link" href="img.[data-source="${original}"]">
-//         <img
-//           class="gallery__image"
-//           src="${preview}"
-//           data-source="${original}"
-//           alt="${description}"
-//         />
-//       </a>
-//     </div>
-//     `;
-//     })
-//     .join("");
-// }
-
-// currentContainer.addEventListener("click", onClickCard);
-
-// const instance = basicLightbox.create(`
-//   <div class="content">
-//         <img
-//           src=""
-//           alt="full-image"
-//         />
-//     </div>
-//   `);
-
-// function onClickCard(evt) {
-//   evt.preventDefault();
-
-//   if (!evt.target.classList.contains("gallery__image")) {
-//     return;
-//   }
-
-//   let selectedImg = evt.target.dataset.source;
-//   const loadImage = instance.element().querySelector("img");
-//   loadImage.src = selectedImg;
-
-//   instance.show();
-//   window.addEventListener("keydown", onEscKeyPress);
-// }
-
-// function onEscKeyPress(event) {
-//   if (event.code === "Escape") {
-//     onCloseModal();
-//   }
-// }
-
-// function onCloseModal() {
-//   instance.close();
-//   window.removeEventListener("keydown", onEscKeyPress);
-// }
-
 import { galleryItems } from "./gallery-items.js";
+// Change code below this line
+console.log(galleryItems);
 
-const galleryContainer = document.querySelector(".gallery");
+const currentContainer = document.querySelector(".gallery");
+const cardsGallery = addItemCard(galleryItems);
 
-function createImgGallery(galleryItems) {
+currentContainer.insertAdjacentHTML("beforeend", cardsGallery);
+
+function addItemCard(galleryItems) {
   return galleryItems
     .map(({ preview, original, description }) => {
       return `
     <div class="gallery__item">
-        <a class="gallery__link" href="${original}">
-            <img
-                class="gallery__image"
-                src="${preview}"
-                data-source="${original}"
-                alt="${description}"
-            />
-        </a>
+      <a class="gallery__link" href="img.[data-source="${original}"]">
+        <img
+          class="gallery__image"
+          src="${preview}"
+          data-source="${original}"
+          alt="${description}"
+        />
+      </a>
     </div>
     `;
     })
     .join("");
 }
 
-const imgMurkup = createImgGallery(galleryItems);
+currentContainer.addEventListener("click", onClickCard);
 
-galleryContainer.insertAdjacentHTML("beforeend", imgMurkup);
+const instance = basicLightbox.create(`
+  <div class="content">
+        <img
+          src=""
+          alt="full-image"
+        />
+    </div>
+  `);
 
-galleryContainer.addEventListener("click", onGalleryImgClick);
-
-const instance = basicLightbox.create(`<img src=""/>`);
-
-function onGalleryImgClick(evt) {
+function onClickCard(evt) {
   evt.preventDefault();
 
-  const isImgSwatchEl = evt.target.classList.contains("gallery__image");
-  if (!isImgSwatchEl) {
+  if (!evt.target.classList.contains("gallery__image")) {
     return;
   }
 
-  let selectedImage = evt.target.dataset.source;
+  let selectedImg = evt.target.dataset.source;
+  const loadImage = instance.element().querySelector("img");
+  loadImage.src = selectedImg;
 
-  const modalImage = instance.element().querySelector("img");
-  modalImage.src = selectedImage;
   instance.show();
+  window.addEventListener("keydown", onEscKeyPress);
+}
 
-  galleryContainer.addEventListener("keydown", onEscClick);
+function onEscKeyPress(event) {
+  if (event.code === "Escape") {
+    onCloseModal();
+  }
 }
 
 function onCloseModal() {
   instance.close();
-  window.removeEventListener("keydown", onEscClick);
-}
-
-function onEscClick(evt) {
-  if (evt.code === "Escape") {
-    onCloseModal();
-  }
+  window.removeEventListener("keydown", onEscKeyPress);
 }
